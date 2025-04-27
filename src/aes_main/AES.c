@@ -42,7 +42,8 @@ static const uint8_t inv_sbox[256] = {
     0xA0, 0xE0, 0x3B, 0x4D, 0xAE, 0x2A, 0xF5, 0xB0, 0xC8, 0xEB, 0xBB, 0x3C, 0x83, 0x53, 0x99, 0x61,
     0x17, 0x2B, 0x04, 0x7E, 0xBA, 0x77, 0xD6, 0x26, 0xE1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0C, 0x7D};
 
-void sub_bytes(char state[4][4])
+// non-linear byte substitution
+void sub_bytes(uint8_t state[4][4])
 {
     for (int i = 0; i < 4; i++)
     {
@@ -53,6 +54,7 @@ void sub_bytes(char state[4][4])
     }
 }
 
+// for optimizing
 void swap(uint8_t *a, uint8_t *b)
 {
     uint8_t temp = *a;
@@ -78,11 +80,7 @@ void shift_rows(uint8_t state[4][4])
     state[3][0] = tmp;
 }
 
-void mix_column(uint8_t *col)
-{
-    uint8_t tmp[4];
-}
-
+// Galois field
 uint8_t gmul(uint8_t a, uint8_t b)
 {
     uint8_t p = 0;
