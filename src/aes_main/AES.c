@@ -80,7 +80,7 @@ void shift_rows(uint8_t state[4][4])
     state[3][0] = tmp;
 }
 
-// Galois field
+// Galois field GF(2^8)
 uint8_t gmul(uint8_t a, uint8_t b)
 {
     uint8_t p = 0;
