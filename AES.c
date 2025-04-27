@@ -77,3 +77,49 @@ void shift_rows(uint8_t state[4][4])
     state[3][1] = state[3][0];
     state[3][0] = tmp;
 }
+
+void mix_column(uint8_t *col)
+{
+    uint8_t tmp[4];
+}
+
+uint8_t gmul(uint8_t a, uint8_t b)
+{
+    uint8_t p = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        if (b & 1)
+            p ^= a;
+        uint8_t carry = a & 0x80;
+        a <<= 1;
+        if (carry)
+            a ^= 0x1b;
+        b >>= 1;
+    }
+    return p;
+}
+
+void mix_column(uint8_t *col)
+{
+    uint8_t tmp[4];
+    tmp[0] = gmul(0x02, col[0]) ^ gmul(0x03, col[1]) ^ col[2] ^ col[3];
+    tmp[1] = col[0] ^ gmul(0x02, col[1]) ^ gmul(0x03, col[2]) ^ col[3];
+    tmp[2] = col[0] ^ col[1] ^ gmul(0x02, col[2]) ^ gmul(0x03, col[3]);
+    tmp[3] = gmul(0x03, col[0]) ^ col[1] ^ col[2] ^ gmul(0x02, col[3]);
+    memcpy(col, tmp, 4);
+}
+
+void aes_round(uint8_t state[4][4], const uint8_t round_key[4][4])
+{
+    sub_bytes(state);
+    shift_rows(state);
+    mix_column(state);
+
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            state[i][j] ^= round_key[i][j];
+        }
+    }
+}
