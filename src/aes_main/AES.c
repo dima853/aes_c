@@ -122,4 +122,6 @@ void aes_round(uint8_t state[4][4], const uint8_t round_key[4][4])
     }
 }
 
-void key_expansion(uint8_t state[4][4]);
+void key_expansion(uint8_t state[4][4])
+{
+}
