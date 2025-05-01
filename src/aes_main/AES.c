@@ -51,18 +51,29 @@ static const uint8_t inv_sbox[256] = {
 const uint8_t RCON[14] = {
     0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1B, 0x36, 0x6C, 0xD8, 0xAB, 0x4D};
 
-// non-linear byte substitution
-void sub_bytes(uint8_t state[4][4])
+void add_round_key(uint8_t state[4][4], const uint8_t round_key[4][4])
 {
+    sub_bytes(state);
+    shift_rows(state);
+    mix_column(state);
+
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
         {
-            state[i][j] = sbox[state[i][j]];
+            state[i][j] ^= round_key[i][j];
         }
     }
 }
-
+void mix_column(uint8_t *col)
+{
+    uint8_t tmp[4];
+    tmp[0] = gmul(0x02, col[0]) ^ gmul(0x03, col[1]) ^ col[2] ^ col[3];
+    tmp[1] = col[0] ^ gmul(0x02, col[1]) ^ gmul(0x03, col[2]) ^ col[3];
+    tmp[2] = col[0] ^ col[1] ^ gmul(0x02, col[2]) ^ gmul(0x03, col[3]);
+    tmp[3] = gmul(0x03, col[0]) ^ col[1] ^ col[2] ^ gmul(0x02, col[3]);
+    memcpy(col, tmp, 4);
+}
 // for optimizing
 void swap(uint8_t *a, uint8_t *b)
 {
@@ -88,6 +99,17 @@ void shift_rows(uint8_t state[4][4])
     state[3][1] = state[3][0];
     state[3][0] = tmp;
 }
+// non-linear byte substitution
+void sub_bytes(uint8_t state[4][4])
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            state[i][j] = sbox[state[i][j]];
+        }
+    }
+}
 
 // Galois field GF(2^8)
 uint8_t gmul(uint8_t a, uint8_t b)
@@ -104,31 +126,6 @@ uint8_t gmul(uint8_t a, uint8_t b)
         b >>= 1;
     }
     return p;
-}
-
-void mix_column(uint8_t *col)
-{
-    uint8_t tmp[4];
-    tmp[0] = gmul(0x02, col[0]) ^ gmul(0x03, col[1]) ^ col[2] ^ col[3];
-    tmp[1] = col[0] ^ gmul(0x02, col[1]) ^ gmul(0x03, col[2]) ^ col[3];
-    tmp[2] = col[0] ^ col[1] ^ gmul(0x02, col[2]) ^ gmul(0x03, col[3]);
-    tmp[3] = gmul(0x03, col[0]) ^ col[1] ^ col[2] ^ gmul(0x02, col[3]);
-    memcpy(col, tmp, 4);
-}
-
-void add_round_key(uint8_t state[4][4], const uint8_t round_key[4][4])
-{
-    sub_bytes(state);
-    shift_rows(state);
-    mix_column(state);
-
-    for (int i = 0; i < 4; i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            state[i][j] ^= round_key[i][j];
-        }
-    }
 }
 
 void key_expansion(uint8_t state[4][4])
