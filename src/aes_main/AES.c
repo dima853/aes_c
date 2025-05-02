@@ -127,7 +127,3 @@ uint8_t gmul(uint8_t a, uint8_t b)
     }
     return p;
 }
-
-void key_expansion(uint8_t state[4][4])
-{
-}
