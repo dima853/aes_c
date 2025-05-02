@@ -17,6 +17,6 @@ void subWord(uint8_t *word);
  * Section 5.2 Algorithm 2 of FIPS 197u1
  * Expects allocated byte arrays for key and expandedKey in right amount to the AES type
  */
-void keyExpansion(uint8_t *key, uint8_t *expandedKeys);
+void keyExpansion(uint8_t *key, uint8_t *expandedKey);
 
 #endif
