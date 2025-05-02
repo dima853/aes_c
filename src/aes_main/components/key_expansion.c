@@ -1,7 +1,7 @@
 #include "AES.h"
 #include "AES.c"
 
-#define WORD_BYTE_SIZE = 10;
+#define WORD_BYTE_SIZE
 
 void rotWord(uint8_t *word)
 {
