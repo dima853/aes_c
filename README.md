@@ -3,7 +3,10 @@
 This repository contains a C implementation of the Advanced Encryption Standard (AES) algorithm. The code is designed to be relatively easy to understand, with clear comments and structure.
 
 ## Materials
+
+## Standard
 -   [FIPS PUB 197](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197.pdf)
+-   [NIST Special Publication 800-38A](https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-38a.pdf)
 
 ### AddRoundKey
 -   [Key Schedule](https://en.wikipedia.org/wiki/AES_key_schedule)
