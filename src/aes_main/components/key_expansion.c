@@ -27,36 +27,29 @@ void subWord(uint8_t word[4])
 */
 void keyExpansion(uint8_t *key, uint8_t *expandedKey)
 {
-    uint8_t Nb = 4, Nk = 8, Nr = 14;
+    uint8_t temp[WORD_SIZE];
 
-    uint8_t temp[WORD_BYTE_SIZE]
-
-        for (int i = 0; i < Nk; i++)
-    {
-        for (int bw = 0; bw < WORD_BYTE_SIZE; bw++)
-        {
-            expandedKey[i * WORD_BYTE_SIZE + bw] = key[i * WORD_BYTE_SIZE + bw];
-        }
-    }
+    memcpy(expandedKey, key, Nk * WORD_SIZE);
 
     for (int i = Nk; i < Nb * (Nr + 1); i++)
     {
-        for (int wb = 0; wb < WORD_BYTE_SIZE; wb++)
-        {
-            temp[wb] = expandedKey[(i - 1) * WORD_BYTE_SIZE + wb];
-        }
+        memcpy(temp, &expandedKey[(i - 1) * WORD_SIZE], WORD_SIZE);
 
         if (i % Nk == 0)
         {
             rotWord(temp);
             subWord(temp);
-            temp[0] ^= rcon[i / Nk];
+            temp[0] ^= rcon[i / Nk - 1];
+        }
+        else if (Nk > 6 && i % Nk == 4)
+        {
+            subWord(temp);
         }
 
-        for (int wb = 0; wb < WORD_BYTE_SIZE; wb++)
+        for (int j = 0; j < WORD_SIZE; j++)
         {
-            expandedKey[i * WORD_BYTE_SIZE + wb] = expandedKey[(i - Nk) * WORD_BYTE_SIZE + wb] ^ temp[wb];
+            expandedKey[i * WORD_SIZE + j] = expandedKey[(i - Nk) * WORD_SIZE + j] ^ temp[j];
         }
     }
-    printExpandedKey(expandedKey, type);
+    printExpandedKey(expandedKey, 256);
 }
