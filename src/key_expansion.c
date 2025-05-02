@@ -3,7 +3,7 @@
 
 #define WORD_BYTE_SIZE = 4;
 
-void rotWord(uint8_t word[4])
+void rotWord(uint8_t *word[4])
 {
     uint8_t temp = word[0];
     word[0] = word[1];
@@ -12,7 +12,7 @@ void rotWord(uint8_t word[4])
     word[3] = temp;
 }
 
-void subWord(uint8_t word[4])
+void subWord(uint8_t *word[4])
 {
     for (int i = 0; i < 4; i++)
     {
