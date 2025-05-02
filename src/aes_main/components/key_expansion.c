@@ -1,8 +1,6 @@
 #include "AES.h"
 #include "AES.c"
 
-#define WORD_BYTE_SIZE
-
 void rotWord(uint8_t *word)
 {
     uint8_t temp = word[0];
@@ -13,10 +11,10 @@ void rotWord(uint8_t *word)
     word[3] = temp;
 }
 
-void subWord(uint8_t *word)
-{
-    for (int i = 0; i < WORD_BYTE_SIZE; i++)
-    {
-        word[i] = sbox[word[i]];
-    }
-}
+// void subWord(uint8_t *word)
+// {
+//     for (int i = 0; i < WORD_BYTE_SIZE; i++)
+//     {
+//         word[i] = sbox[word[i]];
+//     }
+// }
