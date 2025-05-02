@@ -1,4 +1,4 @@
-# AES Implementation in C
+# AES-GCM Implementation in C
 
 This repository contains a C implementation of the Advanced Encryption Standard (AES) algorithm. The code is designed to be relatively easy to understand, with clear comments and structure.
 
@@ -7,6 +7,8 @@ This repository contains a C implementation of the Advanced Encryption Standard 
 ## Standard
 -   [FIPS PUB 197](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197.pdf)
 -   [NIST Special Publication 800-38A](https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-38a.pdf)
+-   ## GCM
+    -   [NIST Special Publication 800-38D: Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode (GCM) and GMAC](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf)
 
 ### AddRoundKey
 -   [Key Schedule](https://en.wikipedia.org/wiki/AES_key_schedule)
