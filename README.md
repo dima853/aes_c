@@ -15,8 +15,6 @@ This repository contains a C implementation of the Advanced Encryption Standard 
     -   [Key Shedule2](https://www.samiam.org/key-schedule.html)
 -   [Related-key Cryptanalysis of the Full AES-192 and AES-256](https://eprint.iacr.org/2009/317.pdf) (Alex Biryukov and Dmitry Khovratovich)
     -   [Davies–Meyer](https://en.m.wikipedia.org/wiki/One-way_compression_function#Davies%E2%80%93Meyer)
-### MixColumns
-### ShiftRow
-### SubBytes
+
 
 
